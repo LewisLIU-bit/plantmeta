@@ -1,0 +1,277 @@
+:root {
+  color: #183224;
+  background: #eff6ef;
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  line-height: 1.5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(54, 114, 84, 0.16), transparent 34%),
+    linear-gradient(315deg, rgba(189, 220, 179, 0.42), transparent 30%),
+    #eff6ef;
+}
+
+button {
+  border: 1px solid #9fbaa7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #183224;
+  cursor: pointer;
+  font: inherit;
+  padding: 9px 13px;
+  transition: 160ms ease;
+}
+
+button:hover {
+  border-color: #39734f;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+button.active {
+  background: #245d3c;
+  border-color: #245d3c;
+  color: #ffffff;
+}
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.hero {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  color: #39734f;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  margin: 0 0 7px;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.08;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: 19px;
+  margin-bottom: 8px;
+}
+
+.subtle,
+.timestamp {
+  color: #647568;
+}
+
+.status-badge {
+  border: 1px solid #b9cbbd;
+  border-radius: 8px;
+  min-width: 172px;
+  padding: 18px;
+  text-align: right;
+}
+
+.status-badge span {
+  display: block;
+  font-size: 14px;
+}
+
+.status-badge strong {
+  display: block;
+  font-size: 28px;
+}
+
+.status-badge.normal {
+  background: #ddf2df;
+}
+
+.status-badge.watch {
+  background: #fff4c8;
+}
+
+.status-badge.danger,
+.status-badge.fault {
+  background: #ffe2dc;
+}
+
+.error {
+  background: #ffe2dc;
+  border: 1px solid #df8a78;
+  border-radius: 8px;
+  color: #7a2618;
+  margin-bottom: 18px;
+  padding: 12px 14px;
+}
+
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.metrics-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
+.metric,
+.panel {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(117, 146, 124, 0.38);
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgba(36, 83, 54, 0.08);
+}
+
+.metric {
+  padding: 18px;
+}
+
+.metric span,
+.metric small {
+  color: #687a6c;
+  display: block;
+}
+
+.metric strong {
+  display: inline-block;
+  font-size: 34px;
+  line-height: 1.1;
+  margin: 10px 7px 2px 0;
+}
+
+.layout {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1.3fr 0.7fr;
+}
+
+.panel {
+  padding: 18px;
+}
+
+.panel.wide {
+  grid-row: span 2;
+}
+
+.panel-head {
+  align-items: start;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-head.compact {
+  align-items: center;
+}
+
+.message {
+  color: #2b4130;
+  min-height: 54px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.chart {
+  display: block;
+  height: auto;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.chart line {
+  stroke: #bfd1c4;
+  stroke-width: 2;
+}
+
+.chart polyline {
+  fill: none;
+  stroke: #2f8c57;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.chart circle {
+  fill: #1d6a42;
+}
+
+.event-list {
+  display: grid;
+  gap: 9px;
+}
+
+.event {
+  align-items: center;
+  border-bottom: 1px solid #dce8de;
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 70px 80px 1fr;
+  padding-bottom: 9px;
+}
+
+.event small {
+  color: #647568;
+  text-align: right;
+}
+
+@media (max-width: 860px) {
+  .hero,
+  .layout {
+    display: block;
+  }
+
+  .status-badge,
+  .panel {
+    margin-top: 14px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .event {
+    grid-template-columns: 1fr;
+  }
+
+  .event small {
+    text-align: left;
+  }
+}
