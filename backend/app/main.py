@@ -7,10 +7,10 @@ from pydantic import BaseModel, Field
 from sqlalchemy import desc, select
 from sqlalchemy.orm import Session
 
-from backend.app.db import Base, engine, get_db
-from backend.app.models import AdviceRecordDB, SensorRecordDB, WateringEventDB
-from backend.app.services.advice import generate_advice
-from backend.app.services.rules import build_rule_result
+from app.db import Base, engine, get_db
+from app.models import AdviceRecordDB, SensorRecordDB, WateringEventDB
+from app.services.advice import generate_advice
+from app.services.rules import build_rule_result
 
 
 PlantStatus = Literal["normal", "watch", "danger", "fault"]

@@ -2,8 +2,8 @@ from typing import Any
 
 import httpx
 
-from backend.app.db import settings
-from backend.app.services.rules import build_template_advice
+from app.db import settings
+from app.services.rules import build_template_advice
 
 
 def build_advice_input_summary(record: Any) -> str:
