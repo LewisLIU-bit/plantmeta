@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
+console.log("API_BASE =", API_BASE);
 
 const statusText = {
   normal: "状态良好",
