@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
+import React, { useEffect, useState } from "react";
+
+const [code, setCode] = useState("");
+const [authorized, setAuthorized] = useState(
+  localStorage.getItem("vip") === "1"
+);
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 console.log("API_BASE =", API_BASE);
@@ -17,6 +23,26 @@ const eventModeText = {
   auto: "自动浇水",
   demo: "演示浇水",
 };
+
+async function login() {
+  const res = await fetch(`${API_BASE}/api/auth`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ code }),
+  });
+
+  const data = await res.json();
+
+  if (data.ok) {
+    setAuthorized(true);
+    localStorage.setItem("vip", "1");
+    alert("授权成功");
+  } else {
+    alert("邀请码错误");
+  }
+}
 
 async function request(path, options) {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -173,6 +199,17 @@ function App() {
       </section>
 
       {error ? <div className="error">{error}</div> : null}
+      {!authorized && (
+        <section className="panel">
+          <h2>授权访问</h2>
+          <input
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="输入邀请码解锁 AI 建议"
+          />
+          <button onClick={login}>验证</button>
+        </section>
+      )}
 
       <section className="grid metrics-grid">
         <Metric label="土壤湿度" value={latest?.soil_moisture_percent} unit="%" />
@@ -208,12 +245,28 @@ function App() {
         <div className="panel">
           <div className="panel-head compact">
             <h2>养护建议</h2>
-            <button onClick={generateAdvice} disabled={loadingAdvice}>
-              {loadingAdvice ? "生成中" : "生成建议"}
-            </button>
+
+            {authorized && (
+              <button onClick={generateAdvice} disabled={loadingAdvice}>
+                {loadingAdvice ? "生成中" : "生成建议"}
+              </button>
+            )}
           </div>
-          <p className="message">{advice?.advice ?? "点击生成建议，测试 LLM 或模板 fallback。"}</p>
-          <p className="timestamp">模型：{advice?.model_name ?? "--"}</p>
+
+          {authorized ? (
+            <>
+              <p className="message">
+                {advice?.advice ?? "点击生成建议，测试 LLM 或模板 fallback。"}
+              </p>
+              <p className="timestamp">
+                模型：{advice?.model_name ?? "--"}
+              </p>
+            </>
+          ) : (
+            <p className="message">
+              此功能仅限授权用户使用
+            </p>
+          )}
         </div>
 
         <div className="panel">

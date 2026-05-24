@@ -11,6 +11,7 @@ from app.db import Base, engine, get_db
 from app.models import AdviceRecordDB, SensorRecordDB, WateringEventDB
 from app.services.advice import generate_advice
 from app.services.rules import build_rule_result
+from app.config import AUTHORIZED_CODES
 
 
 PlantStatus = Literal["normal", "watch", "danger", "fault"]
@@ -195,3 +196,12 @@ def create_advice(db: Session = Depends(get_db)):
     db.commit()
     db.refresh(record)
     return record
+
+@app.post("/api/auth")
+def auth(data: dict):
+    code = data.get("code")
+
+    if code in AUTHORIZED_CODES:
+        return {"ok": True}
+
+    return {"ok": False}
