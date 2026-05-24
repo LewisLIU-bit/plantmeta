@@ -2,20 +2,66 @@
 
 PlantMeta 是桌面植物智能养护盒项目的软件端。当前第一步先实现一个最小 FastAPI 后端，用于接收模拟 ESP32 传感器数据、进行简单植物状态判断，并提供基础查询接口。
 
-## 项目启动
+## 在线访问 | Online Access
 
-### 启动后端
+### 前端 Dashboard
+
+https://plantmeta-web.onrender.com
+
+打开即可查看：
+
+- 实时植物状态
+- AI 分析建议
+- 历史数据
+- Event Log
+
+---
+
+### 后端 API Docs
+
+https://plantmeta-api.onrender.com/docs
+
+可在线测试：
+
+- `/api/latest`
+- `/api/history`
+- `/api/events`
+- `/api/sensor/upload`
+
+---
+
+## 本地开发（可选）
+
+如需本地调试：
+
+### Backend
 
 ```powershell
-cd "D:\vscode-project\python\Courses\2026_spring\Introduction-to-Engineering\PlantMeta"
+cd PlantMeta\backend
 .\.venv\Scripts\Activate.ps1
-uvicorn backend.app.main:app --reload
+uvicorn app.main:app --reload
 ```
 
-打开 API 文档：
+本地访问：
 
 ```text
 http://127.0.0.1:8000/docs
+```
+
+---
+
+### Frontend
+
+```powershell
+cd PlantMeta\frontend
+npm run dev
+```
+
+本地访问：
+
+```text
+http://localhost:5173
+```
 ```
 
 
