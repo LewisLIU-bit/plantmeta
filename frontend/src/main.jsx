@@ -18,14 +18,7 @@ const eventModeText = {
   demo: "演示浇水",
 };
 
-async function login() {
-  const res = await fetch(`${API_BASE}/api/auth`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ code }),
-  });
+
 
   const data = await res.json();
 
@@ -36,7 +29,7 @@ async function login() {
   } else {
     alert("邀请码错误");
   }
-}
+
 
 async function request(path, options) {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -114,6 +107,15 @@ function App() {
   const [autoWatering, setAutoWatering] = useState(false);
   const [error, setError] = useState("");
   const [loadingAdvice, setLoadingAdvice] = useState(false);
+
+  async function login() {
+  const res = await fetch(`${API_BASE}/api/auth`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ code }),
+  });
  
 
   async function refresh() {
@@ -284,6 +286,7 @@ function App() {
       </section>
     </main>
   );
+}
 }
 
 createRoot(document.getElementById("root")).render(<App />);
