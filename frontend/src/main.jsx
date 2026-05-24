@@ -19,18 +19,6 @@ const eventModeText = {
 };
 
 
-
-  const data = await res.json();
-
-  if (data.ok) {
-    setAuthorized(true);
-    localStorage.setItem("vip", "1");
-    alert("授权成功");
-  } else {
-    alert("邀请码错误");
-  }
-
-
 async function request(path, options) {
   const response = await fetch(`${API_BASE}${path}`, {
     headers: { "Content-Type": "application/json" },
@@ -109,6 +97,7 @@ function App() {
   const [loadingAdvice, setLoadingAdvice] = useState(false);
 
   async function login() {
+    try{
   const res = await fetch(`${API_BASE}/api/auth`, {
     method: "POST",
     headers: {
@@ -116,6 +105,20 @@ function App() {
     },
     body: JSON.stringify({ code }),
   });
+
+    const data = await res.json();
+
+  if (data.ok) {
+    setAuthorized(true);
+    localStorage.setItem("vip", "1");
+    alert("授权成功");
+  } else {
+    alert("邀请码错误");
+  }
+  } catch (err) {
+      alert("登录失败: " + err.message);
+    }
+  }
  
 
   async function refresh() {
@@ -287,6 +290,6 @@ function App() {
     </main>
   );
 }
-}
+
 
 createRoot(document.getElementById("root")).render(<App />);
