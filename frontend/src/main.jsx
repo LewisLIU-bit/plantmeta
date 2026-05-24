@@ -103,6 +103,10 @@ function MiniChart({ data }) {
 }
 
 function App() {
+  const [code, setCode] = useState("");
+  const [authorized, setAuthorized] = useState(
+    localStorage.getItem("vip") === "1"
+  );
   const [latest, setLatest] = useState(null);
   const [history, setHistory] = useState([]);
   const [events, setEvents] = useState([]);
@@ -110,10 +114,7 @@ function App() {
   const [autoWatering, setAutoWatering] = useState(false);
   const [error, setError] = useState("");
   const [loadingAdvice, setLoadingAdvice] = useState(false);
-  const [code, setCode] = useState("");
-  const [authorized, setAuthorized] = useState(
-    localStorage.getItem("vip") === "1"
-  );
+ 
 
   async function refresh() {
     try {
