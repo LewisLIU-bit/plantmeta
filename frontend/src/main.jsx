@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
-import React, { useEffect, useState } from "react";
+
 
 const [code, setCode] = useState("");
 const [authorized, setAuthorized] = useState(
@@ -116,6 +116,10 @@ function App() {
   const [autoWatering, setAutoWatering] = useState(false);
   const [error, setError] = useState("");
   const [loadingAdvice, setLoadingAdvice] = useState(false);
+  const [code, setCode] = useState("");
+  const [authorized, setAuthorized] = useState(
+    localStorage.getItem("vip") === "1"
+  );
 
   async function refresh() {
     try {
