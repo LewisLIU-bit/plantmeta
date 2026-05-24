@@ -119,6 +119,13 @@ function App() {
       alert("登录失败: " + err.message);
     }
   }
+
+  function logout() {
+    setAuthorized(false);
+    setCode(""); // 顺便把输入框清空
+    localStorage.removeItem("vip");
+    alert("已退出授权状态");
+  }
  
 
   async function refresh() {
@@ -250,11 +257,19 @@ function App() {
           <div className="panel-head compact">
             <h2>养护建议</h2>
 
-            {authorized && (
-              <button onClick={generateAdvice} disabled={loadingAdvice}>
-                {loadingAdvice ? "生成中" : "生成建议"}
-              </button>
-            )}
+            <div className="actions" style={{ display: "flex", gap: "8px" }}>
+              {authorized && (
+                <>
+                  <button onClick={generateAdvice} disabled={loadingAdvice}>
+                    {loadingAdvice ? "生成中" : "生成建议"}
+                  </button>
+                  
+                  <button onClick={logout} style={{ backgroundColor: "#ff4d4f", color: "#fff" }}>
+                    退出授权
+                  </button>
+                </>
+              )}
+            </div>
           </div>
 
           {authorized ? (
