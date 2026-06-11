@@ -49,8 +49,9 @@ class ControlResponse(BaseModel):
 
 
 class ManualWaterRequest(BaseModel):
-    duration_ms: int = Field(1000, ge=100, le=3000, examples=[1000])
+    duration_ms: int = Field(1000, ge=100, le=10000, examples=[1000])
     reason: str = Field("Manual watering requested by user.", max_length=255)
+    code: str
 
 
 class AutoWaterRequest(BaseModel):
@@ -147,17 +148,29 @@ def get_sensor_history(limit: int = Query(50, ge=1, le=500), db: Session = Depen
     return list(reversed(records))
 
 
-@app.post("/api/water/manual", response_model=WateringEvent)
-def trigger_manual_watering(request: ManualWaterRequest, db: Session = Depends(get_db)):
+@app.post("/api/water/manual")
+def trigger_manual_watering(
+    request: ManualWaterRequest,
+    db: Session = Depends(get_db)
+):
+
+    if request.code not in AUTHORIZED_CODES:
+        raise HTTPException(
+            status_code=403,
+            detail="邀请码无效"
+        )
+
     event = WateringEventDB(
         timestamp=datetime.now(timezone.utc),
         mode="manual",
         duration_ms=request.duration_ms,
         reason=request.reason,
     )
+
     db.add(event)
     db.commit()
     db.refresh(event)
+
     return event
 
 
