@@ -95,6 +95,8 @@ function App() {
   const [autoWatering, setAutoWatering] = useState(false);
   const [error, setError] = useState("");
   const [loadingAdvice, setLoadingAdvice] = useState(false);
+  const [waterDuration, setWaterDuration] =
+  useState(3000);
 
   async function login() {
     try{
@@ -157,17 +159,27 @@ function App() {
     }
   }
 
-  async function manualWater() {
+    async function manualWater() {
     try {
+
+      if (!authorized) {
+        setError("请输入有效邀请码");
+        return;
+      }
+
       setError("");
+
       await request("/api/water/manual", {
         method: "POST",
         body: JSON.stringify({
-          duration_ms: 1000,
+          duration_ms: waterDuration,
           reason: "前端测试面板触发手动浇水。",
+          code: code,
         }),
       });
+
       await refresh();
+
     } catch (err) {
       setError(err.message);
     }
@@ -257,18 +269,54 @@ function App() {
           <div className="panel-head compact">
             <h2>养护建议</h2>
 
-            <div className="actions" style={{ display: "flex", gap: "8px" }}>
+            <div className="actions" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+
               {authorized && (
                 <>
-                  <button onClick={generateAdvice} disabled={loadingAdvice}>
-                    {loadingAdvice ? "生成中" : "生成建议"}
-                  </button>
-                  
-                  <button onClick={logout} style={{ backgroundColor: "#ff4d4f", color: "#fff" }}>
-                    退出授权
-                  </button>
+
+                  <div>
+                    <label>
+                      浇水时长：{waterDuration} ms
+                    </label>
+
+                    <input
+                      type="range"
+                      min="500"
+                      max="10000"
+                      step="500"
+                      value={waterDuration}
+                      onChange={(e) =>
+                        setWaterDuration(Number(e.target.value))
+                      }
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+
+                  <div style={{ display: "flex", gap: "8px" }}>
+
+                    <button onClick={manualWater}>
+                      手动浇水
+                    </button>
+
+                    <button onClick={generateAdvice} disabled={loadingAdvice}>
+                      {loadingAdvice ? "生成中" : "生成建议"}
+                    </button>
+
+                    <button
+                      onClick={logout}
+                      style={{
+                        backgroundColor: "#ff4d4f",
+                        color: "#fff",
+                      }}
+                    >
+                      退出授权
+                    </button>
+
+                  </div>
+
                 </>
               )}
+
             </div>
           </div>
 
