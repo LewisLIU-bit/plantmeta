@@ -96,7 +96,7 @@ function App() {
   const [error, setError] = useState("");
   const [loadingAdvice, setLoadingAdvice] = useState(false);
   const [waterDuration, setWaterDuration] =
-  useState(3000);
+  useState(300);
 
   async function login() {
     try{
@@ -281,9 +281,9 @@ function App() {
 
                     <input
                       type="range"
-                      min="500"
-                      max="10000"
-                      step="500"
+                      min="50"
+                      max="1000"
+                      step="50"
                       value={waterDuration}
                       onChange={(e) =>
                         setWaterDuration(Number(e.target.value))
