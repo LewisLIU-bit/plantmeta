@@ -49,7 +49,7 @@ class ControlResponse(BaseModel):
 
 
 class ManualWaterRequest(BaseModel):
-    duration_ms: int = Field(1000, ge=100, le=10000, examples=[1000])
+    duration_ms: int = Field(100, ge=10, le=1000, examples=[100])
     reason: str = Field("Manual watering requested by user.", max_length=255)
     code: str
 
