@@ -64,11 +64,11 @@ def build_rule_result(data: SensorLike) -> RuleResult:
 def build_template_advice(record: SensorLike, status: str, message: str) -> str:
     if status == "fault":
         return "当前传感器数据存在异常，建议先检查接线、电源和传感器读数，暂时不要自动浇水。"
-    if record.soil_moisture_percent < 25:
+    if record.soil_moisture_percent < 15:
         return "当前土壤湿度明显偏低，建议少量浇水，并在接下来一段时间观察湿度是否回升。"
     if record.soil_moisture_percent > 85:
         return "当前土壤湿度偏高，建议暂停浇水，保持通风，避免根部长期处于过湿环境。"
-    if record.light_lux < 300:
+    if record.light_lux < 100:
         return "当前光照偏弱，建议把绿萝移到明亮散射光位置，避免长期处于阴暗环境。"
     if record.light_lux > 2000:
         return "当前光照偏强，建议避免长时间直射阳光，以免叶片被晒伤。"
