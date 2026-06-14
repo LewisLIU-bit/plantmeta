@@ -31,7 +31,7 @@ def evaluate_plant_status(data: SensorLike) -> tuple[PlantStatus, str]:
     if data.air_temperature < -10 or data.air_temperature > 60:
         return "fault", "环境温度读数异常，请检查温湿度传感器。"
 
-    if data.soil_moisture_percent < 25:
+    if data.soil_moisture_percent < 15:
         return "danger", "土壤湿度明显偏低，植物处于缺水风险状态，建议少量浇水并继续观察。"
     if data.soil_moisture_percent < 35:
         return "watch", "土壤湿度略低，建议关注后续变化，必要时少量补水。"
@@ -39,7 +39,7 @@ def evaluate_plant_status(data: SensorLike) -> tuple[PlantStatus, str]:
         return "danger", "土壤湿度过高，建议暂停浇水并保持通风。"
     if data.soil_moisture_percent > 75:
         return "watch", "土壤湿度偏高，暂时不建议继续浇水。"
-    if data.light_lux < 300:
+    if data.light_lux < 100:
         return "watch", "当前光照偏弱，建议移到明亮散射光位置。"
     if data.light_lux > 2000:
         return "watch", "当前光照偏强，建议避免长时间直射阳光。"
