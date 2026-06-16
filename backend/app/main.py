@@ -18,6 +18,10 @@ PlantStatus = Literal["normal", "watch", "danger", "fault"]
 PumpStatus = Literal["off", "on"]
 Command = Literal["none", "water", "stop"]
 WaterMode = Literal["manual", "auto", "demo"]
+control_state = {
+    "command": "none",
+    "duration_ms": 0
+}
 
 
 class SensorUpload(BaseModel):
@@ -160,6 +164,7 @@ def trigger_manual_watering(
             detail="邀请码无效"
         )
 
+    # 1️⃣ 写数据库（保留你原来的）
     event = WateringEventDB(
         timestamp=datetime.now(timezone.utc),
         mode="manual",
@@ -170,6 +175,11 @@ def trigger_manual_watering(
     db.add(event)
     db.commit()
     db.refresh(event)
+
+    # 2️⃣ ⭐新增：写控制指令（核心）
+    global control_state
+    control_state["command"] = "water"
+    control_state["duration_ms"] = request.duration_ms
 
     return event
 
@@ -218,3 +228,8 @@ def auth(data: dict):
         return {"ok": True}
 
     return {"ok": False}
+
+@app.get("/api/control/latest")
+def get_control():
+    global control_state
+    return control_state
