@@ -113,6 +113,7 @@ function App() {
   if (data.ok) {
     setAuthorized(true);
     localStorage.setItem("vip", "1");
+    localStorage.setItem("code", code);
     alert("授权成功");
   } else {
     alert("邀请码错误");
@@ -169,12 +170,14 @@ function App() {
 
       setError("");
 
+      const savedCode = localStorage.getItem("code");
+
       await request("/api/water/manual", {
         method: "POST",
         body: JSON.stringify({
           duration_ms: waterDuration,
           reason: "前端测试面板触发手动浇水。",
-          code: code,
+          code: savedCode,
         }),
       });
 
