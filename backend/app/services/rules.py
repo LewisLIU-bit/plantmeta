@@ -33,7 +33,7 @@ def evaluate_plant_status(data: SensorLike) -> tuple[PlantStatus, str]:
 
     if data.soil_moisture_percent < 15:
         return "danger", "土壤湿度明显偏低，植物处于缺水风险状态，建议少量浇水并继续观察。"
-    if data.soil_moisture_percent < 35:
+    if data.soil_moisture_percent < 25:
         return "watch", "土壤湿度略低，建议关注后续变化，必要时少量补水。"
     if data.soil_moisture_percent > 85:
         return "danger", "土壤湿度过高，建议暂停浇水并保持通风。"
